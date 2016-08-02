@@ -1,14 +1,16 @@
 library(xgboost)
 data(iris)
 x <- as.matrix(iris[, 1:4])
-y <- ifelse(iris$Species == "versicolor", 1, 0)
+y <- ifelse(iris$Species == "versicolor", 1L, 0L)
 dtrain <- xgb.DMatrix(x, label = y)
 param <- list(
-	max.depth = 4, 
+	max.depth = 2, 
 	eta = 0.1, 
 	objective = "binary:logistic"
 )
-model <- xgb.train(params = param, data = dtrain, nrounds = 10)
+set.seed(0)
+model <- xgb.train(params = param, data = dtrain, nrounds = 100)
 source("R/xgbjson.R")
 saveRDS(model, file = "R/model.RDS")
-xgbjson(model = model, file = "model.js", fnames = colnames(x), na.value = "null")
+feature_names = gsub('[.]', '_', tolower(colnames(x)))
+xgbjson(model = model, file = "R/model.js", fnames = feature_names, na_value = "null")

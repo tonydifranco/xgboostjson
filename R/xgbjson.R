@@ -1,14 +1,14 @@
-xgbjson <- function(model, file, fnames = NULL,  na.value = NULL){
-	if(!class(na.value) %in% c("character", "NULL")){
-		stop("na.value: argument must be type character (when provided)")
+xgbjson <- function(model, file, fnames = NULL,  na_value = NULL){
+	if(!class(na_value) %in% c("character", "NULL")){
+		stop("na_value: argument must be type character (when provided)")
 	}
 	if(!class(fnames) %in% c("character", "NULL")){
-		stop("na.value: argument must be type character (when provided)")
+		stop("na_value: argument must be type character (when provided)")
 	}
 	if(class(file) != "character"){
 		stop("file: argument must be non-empty string")
 	}
-	require(xgboost)
+	library(xgboost)
 	if(!is.null(fnames)){
 		fnames <- data.frame(var = paste0("f", 1:length(fnames) - 1), full = fnames)
 	}
@@ -23,7 +23,7 @@ xgbjson <- function(model, file, fnames = NULL,  na.value = NULL){
 		stmt <- gsub("^leaf=", "", gsub("^\\[.+<", "<", gsub("]\\s.+", "", t)))
 		var <- gsub("\\[", "", gsub("(<|>).+", "", t))
 		true <- suppressWarnings(as.integer(gsub(",no.+", "", gsub("^.+yes=", "", t))))
-		if(!is.null(na.value)){
+		if(!is.null(na_value)){
 			false <- suppressWarnings(as.integer(gsub(",missing.+", "", gsub("^.+no=", "", t))))
 			missing <- suppressWarnings(as.integer(gsub("^.+missing=", "", t)))
 			df <- data.frame(node = node, leaf = leaf, var = var, stmt = stmt, true = true, false = false, missing = missing)
@@ -33,10 +33,12 @@ xgbjson <- function(model, file, fnames = NULL,  na.value = NULL){
 		}
 		if(!is.null(fnames)){
 			df <- merge(df, fnames, by = "var", all.x = TRUE, sort = FALSE)
+		}else{
+			df$full = var
 		}
 		df$json <- ifelse(df$leaf, 
 			paste0("n", df$node, ": function(d){return ", df$stmt, ";}"), 
-			paste0("n", df$node, ": function(d){if(d['", df$full, "']==", na.value, ")", "{return this.n", df$missing, "(d);}else if(d['", df$full, "']", df$stmt, "){return this.n", df$true, "(d);}else{return this.n", df$false, "(d);}}")
+			paste0("n", df$node, ": function(d){if(d['", df$full, "']==", na_value, "){return this.n", df$missing, "(d);}else if(d['", df$full, "']", df$stmt, "){return this.n", df$true, "(d);}else{return this.n", df$false, "(d);}}")
 		)
 		json <- paste0(json, "{predict: function(d){return this.n0(d);},", paste0(df$json, collapse = ","), ifelse(b == length(bi), "}", "},"))
 	}

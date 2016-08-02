@@ -1,4 +1,4 @@
 src/
 *.RDS
-R/treeToJSON.R
-node_modules/
+*.bin
+model.js
