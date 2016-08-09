@@ -16,7 +16,8 @@ param = {
 	'max_depth': 2, 
 	'eta': 0.1, 
 	'objective': 'binary:logistic',
-	'seed': 0
+	'seed': 0,
+	'nthread': 1
 }
 model = xgb.train(params = param, dtrain = dtrain, num_boost_round = 100)
 model.save_model('python/model.bin')

@@ -6,7 +6,8 @@ dtrain <- xgb.DMatrix(x, label = y)
 param <- list(
 	max.depth = 2, 
 	eta = 0.1, 
-	objective = "binary:logistic"
+	objective = "binary:logistic",
+	nthread = 1
 )
 set.seed(0)
 model <- xgb.train(params = param, data = dtrain, nrounds = 100)
