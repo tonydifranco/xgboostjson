@@ -8,7 +8,7 @@ utility to convert an R or Python xgboost model object to javascript for use in 
 4. `Rscript R/iris_example.R`
 5. `python python/iris_example.py`
 6. `node httpserver.js`
-7. browse to `http//localhost:8080/`
+7. browse to `http://localhost:8080/`
 8. enjoy!
 
 ![Working Demo](https://github.com/tonydifranco/xgboostjson/blob/master/img/demo.PNG?raw=true)

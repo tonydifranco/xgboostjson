@@ -1,4 +1,4 @@
-src/
 *.RDS
 *.bin
 model.js
+python/xgbjson/__pycache__/
