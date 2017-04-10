@@ -85,10 +85,10 @@ xgbjson <- function(
 
   if (regression) {
     # inverse log
-    json <- sprintf(json, sprintf('Math.exp(%s + ', base_score, ''))
+    json <- sprintf(json, sprintf('Math.exp(%s + ', base_score), '')
   } else {
     # inverse logit
-    json <- sprintf(json, "1 / (1 + Math.exp(-", ')')
+    json <- sprintf(json, "1 / (1 + Math.exp(-", '')
   }
   
   all_trees_js <- unlist(lapply(dump, function(booster) {
