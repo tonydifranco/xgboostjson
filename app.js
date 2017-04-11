@@ -8,7 +8,7 @@ const model = require('./R/model.js');
 http.createServer(function(request, response){
 	let q = url.parse(request.url, true).query;
 	if(Object.keys(q) == 0){
-		fs.readFile('./demo.html', function(error, data){
+		fs.readFile('./index.html', function(error, data){
 			response.end(data, 'utf-8');
 		});
 	}else{

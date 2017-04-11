@@ -3,13 +3,15 @@ utility to convert an R or Python xgboost model object to a node.js module.
 
 ## Demo Instructions
 1. `git clone https://github.com/tonydifranco/xgboostjson.git`
-2. ensure `Rscript`, `python` and `node.js` are on the system path
-3. `cd` to root directory
-4. `Rscript R/iris_example.R`
-5. `python python/iris_example.py`
-6. `node httpserver.js`
-7. browse to `http://localhost:8080/`
-8. enjoy!
+1. ensure `Rscript`, `python` and `node.js` are on the system path
+    - non-base `R` libraries: `xgboost`, `dplyr`, `jsonlite`, `js`
+    - non-standard `python `modules: `xgboost`, `numpy`, `sklearn`
+1. `cd` to root directory
+1. `Rscript R/iris_example.R`
+1. `python python/iris_example.py`
+1. `node app.js`
+1. browse to `http://localhost:8080/`
+1. enjoy!
 
 ![Working Demo](https://github.com/tonydifranco/xgboostjson/blob/master/img/demo.PNG?raw=true)
 

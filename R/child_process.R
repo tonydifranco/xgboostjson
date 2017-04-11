@@ -1,5 +1,5 @@
 args <- commandArgs(TRUE)
-library(RJSONIO)
+library(jsonlite)
 library(xgboost)
 model <- readRDS("R/model.RDS")
 newData <- xgb.DMatrix(
