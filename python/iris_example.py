@@ -4,21 +4,24 @@ from sklearn import datasets
 # detect if in interactive mode or running as a script
 import __main__ as main
 if hasattr(main, '__file__'):
-	import xgbjson.xgbjson as xgbjson
+	from xgbjson.xgbjson import XgbJSON
 else:
-	import python.xgbjson.xgbjson as xgbjson
+	from python.xgbjson.xgbjson import XgbJSON
 
 iris = datasets.load_iris()
-label = np.array([1 if iris.target_names[i] == 'versicolor' else 0 for i in iris.target])
-feature_names = [i.replace(' (cm)', '').replace(' ', '_') for i in iris.feature_names]
-dtrain = xgb.DMatrix(iris.data, label = label, feature_names = feature_names)
+tn = iris.target_names
+fn = iris.feature_names
+label = np.array([1 if tn[i] == 'versicolor' else 0 for i in iris.target])
+fnames = [i.replace(' (cm)', '').replace(' ', '_') for i in fn]
+dtrain = xgb.DMatrix(iris.data, label=label, feature_names=fnames)
 param = {
 	'max_depth': 2, 
 	'eta': 0.1, 
 	'objective': 'binary:logistic',
-	'seed': 0,
-	'nthread': 1
+    'silent': 1
 }
-model = xgb.train(params = param, dtrain = dtrain, num_boost_round = 100)
+model = xgb.train(params=param, dtrain=dtrain, num_boost_round=100)
 model.save_model('python/model.bin')
-xgbjson.to_json(model = model, file = 'python/model.js', na_value = 'null')
+xgbjson = XgbJSON(model, na_value='null')
+with open('python/model.js', 'w') as f:
+    f.write(xgbjson.to_json())

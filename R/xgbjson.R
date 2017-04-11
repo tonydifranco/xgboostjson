@@ -39,7 +39,7 @@ xgbjson <- function(
     if (!is.null(node$leaf)) {
       innerJs <- sprintf('return %s;', node$leaf)
     } else {
-      f <- node$split
+      f <- paste0('f', node$split)
       val <- node$split_condition
       stmt <- '<'
 
@@ -88,7 +88,7 @@ xgbjson <- function(
     json <- sprintf(json, sprintf('Math.exp(%s + ', base_score), '')
   } else {
     # inverse logit
-    json <- sprintf(json, "1 / (1 + Math.exp(-", '')
+    json <- sprintf(json, "1 / (1 + Math.exp(-", ')')
   }
   
   all_trees_js <- unlist(lapply(dump, function(booster) {
