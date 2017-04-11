@@ -1,5 +1,5 @@
 # xgboostjson
-utility to convert an R or Python xgboost model object to javascript for use in a node.js application.
+utility to convert an R or Python xgboost model object to a node.js module.
 
 ## Demo Instructions
 1. `git clone https://github.com/tonydifranco/xgboostjson.git`
@@ -16,5 +16,3 @@ utility to convert an R or Python xgboost model object to javascript for use in 
 ## Notes
 * model results may not be entirely reproducibile between R and Python even when setting the seed on both platforms
 * the main takeaway is that there are huge performance gains by converting the model object to your webserver's native language
-* suggestion for improvement... implement this directly in the [xgboost source code](https://github.com/dmlc/xgboost/blob/master/src/tree/tree_model.cc)
-  * it would require much less code since you can access the tree object and properties directly without need for the regex pre-processing

@@ -98,7 +98,15 @@ xgbjson <- function(
       },"
 
     textCon <- textConnection('nodes', 'w')
-    recursiveSearch(booster, textCon, fnames, na_value, categoricals, sparse_trained)
+    
+    recursiveSearch(
+    	booster,
+    	textCon,
+    	fnames,
+    	na_value,
+    	categoricals,
+    	sparse_trained)
+
     close(textCon)
     paste0(tree_js, paste0(nodes, collapse = ','), '}')
   }))

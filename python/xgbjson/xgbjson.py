@@ -3,10 +3,12 @@ import os
 import subprocess
 import xgboost as xgb
 
+
 class XgbJSON:
     nodes = []
-    def __init__(self, booster, fnames=None, na_value='null', 
-                 regression=False, categoricals=None, base_score=0, 
+
+    def __init__(self, booster, fnames=None, na_value='null',
+                 regression=False, categoricals=None, base_score=0,
                  sparse_trained=True):
         """initialize"""
         self.booster = booster
@@ -31,7 +33,6 @@ class XgbJSON:
                     return this.n0(d);
                 },""" + ','.join(n)
 
-
         model_js = """module.exports = {{
             predict: function(d) {{
               return {}this.boosters.map(function(x) {{
@@ -49,7 +50,7 @@ class XgbJSON:
             f.write(model_js)
 
         r_uglify_args = [
-            'Rscript', '--vanilla', '-e', 
+            'Rscript', '--vanilla', '-e',
             """cat(
                  js::uglify_reformat(
                    readLines("tmp.js"),
@@ -93,7 +94,7 @@ class XgbJSON:
                 sparse_bool = ""
 
             inner_js = """
-                if (d['{split}'] === undefined || 
+                if (d['{split}'] === undefined ||
                     d['{split}'] === {na_value}
                     {sparse_bool}) {{
                   return this.n{missing}(d);
@@ -102,22 +103,10 @@ class XgbJSON:
                 }} else {{
                   return this.n{no}(d);
                 }}
-                """.format(na_value=self.na_value, sparse_bool=sparse_bool, 
+                """.format(na_value=self.na_value, sparse_bool=sparse_bool,
                            stmt=stmt, val=val, **node)
 
-        node_js = 'n{}: function(d) {{ {} }}\n'.format(node['nodeid'], inner_js)
+        node_js = 'n{}: function(d) {{ {} }}\n'.format(node['nodeid'],
+                                                       inner_js)
 
         return node_js
-
-
-
-# from sklearn import datasets
-# import numpy as np
-# iris = datasets.load_iris()
-# fnames = [i.replace(' (cm)', '').replace(' ', '_') for i in iris.feature_names]
-# booster = xgb.Booster()
-# booster.load_model('python/model.bin')
-# xgbjson = XgbJSON(booster, fnames=fnames, na_value='null')
-
-# with open('python/model.js', 'w') as f:
-#     f.write(xgbjson.to_json(fnames=fnames))

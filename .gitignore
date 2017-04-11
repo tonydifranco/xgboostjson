@@ -1,4 +1,5 @@
 *.RDS
 *.bin
+Thumbs.db
 model.js
 python/xgbjson/__pycache__/
