@@ -1,3 +1,4 @@
+import jsbeautifier
 import json
 import os
 import subprocess
@@ -46,25 +47,13 @@ class XgbJSON:
             model_js = model_js.format('1 / (1 + Math.exp(-', ')')
 
         model_js = model_js + '},'.join(self.nodes) + '}]};\n'
-        with open('tmp.js', 'w') as f:
-            f.write(model_js)
 
-        r_uglify_args = [
-            'Rscript', '--vanilla', '-e',
-            """cat(
-                 js::uglify_reformat(
-                   readLines("tmp.js"),
-                   beautify = TRUE,
-                   indent_level = 2
-                 )
-               )
-            """
-        ]
-        r_uglify = subprocess.run(r_uglify_args, stdout=subprocess.PIPE)
+        # beautify
+        opts = jsbeautifier.default_options()
+        opts.indent_size = 2
+        model_js = jsbeautifier.beautify(model_js, opts)
 
-        os.remove('tmp.js')
-
-        return r_uglify.stdout.decode('utf-8').replace('\r\n', '\n')
+        return model_js
 
     def recursive_bfs(self, node):
         """breadth first search to traverse all nodes recursively"""
