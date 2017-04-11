@@ -1,123 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-	</head>
-	<body>
-		<div class="container-fluid">
-		<div class="row">
-			<div id="input" class="col-3">
-				<h2>Input Data</h2>
-				<form class="form col-12">
-					<fieldset id="searchForm" class="form-group row">
-						<div class="form-group row">
-							<label for="sepal_length" class="col-6 col-form-label">Sepal Length</label>
-							<div class="col-6">
-								<input type="number" class="form-control" id="sepal_length" name="sepal_length" placeholder="Sepal Length" min="0", step="0.1" value="0">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="sepal_width" class="col-6 col-form-label">Sepal Width</label>
-							<div class="col-6">
-								<input type="number" class="form-control" id="sepal_width" name="sepal_width" placeholder="Sepal Width" min="0", step="0.1" value="0">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="petal_length" class="col-6 col-form-label">Petal Length</label>
-							<div class="col-6">
-								<input type="number" class="form-control" id="petal_length" name="petal_length" placeholder="Petal Length" min="0", step="0.1" value="0">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="petal_width" class="col-6 col-form-label">Petal Width</label>
-							<div class="col-6">
-								<input type="number" class="form-control" id="petal_width" name="petal_width" placeholder="Petal Width" min="0", step="0.1" value="0">
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col-6 offset-6">
-								<button type="submit" class="btn btn-primary">Predict</button>
-							</div>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-			<div class="col-3">
-				<h2>node xgboostjson</h2>
-				<div id="node" class="col-12">
-				</div>
-			</div>
-			<div class="col-3">
-				<h2>rscript child_process</h2>
-				<div id="r" class="col-12">
-				</div>
-			</div>
-			<div class="col-3">
-				<h2>python child_process</h2>
-				<div id="python" class="col-12">
-				</div>
-			</div>
-		</div>
-		</div>
-		<!-- jQuery first, then Tether, then Bootstrap JS. -->
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+    <div class="row">
+      <div id="input" class="col-3">
+        <h2>Input Data</h2>
+        <form class="form col-12">
+          <fieldset id="searchForm" class="form-group row">
+            <div class="form-group row">
+              <label for="sepal_length" class="col-6 col-form-label">Sepal Length</label>
+              <div class="col-6">
+                <input type="number" class="form-control" id="sepal_length" name="sepal_length" placeholder="Sepal Length" min="0", step="0.1" value="0">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="sepal_width" class="col-6 col-form-label">Sepal Width</label>
+              <div class="col-6">
+                <input type="number" class="form-control" id="sepal_width" name="sepal_width" placeholder="Sepal Width" min="0", step="0.1" value="0">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="petal_length" class="col-6 col-form-label">Petal Length</label>
+              <div class="col-6">
+                <input type="number" class="form-control" id="petal_length" name="petal_length" placeholder="Petal Length" min="0", step="0.1" value="0">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="petal_width" class="col-6 col-form-label">Petal Width</label>
+              <div class="col-6">
+                <input type="number" class="form-control" id="petal_width" name="petal_width" placeholder="Petal Width" min="0", step="0.1" value="0">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-6 offset-6">
+                <button type="submit" class="btn btn-primary">Predict</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="col-3">
+        <h2>node xgboostjson</h2>
+        <div id="node" class="col-12">
+        </div>
+      </div>
+      <div class="col-3">
+        <h2>rscript child_process</h2>
+        <div id="r" class="col-12">
+        </div>
+      </div>
+      <div class="col-3">
+        <h2>python child_process</h2>
+        <div id="python" class="col-12">
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
-		<script type="text/javascript">
-		$(document).ready(function(){
-			$('form').on('submit', function(e){
-				var start = Date.now();
-				e.preventDefault();
-				$.ajax({
-					url: '?' + $('form').serialize() + "&method=node",
-					beforeSend: function(){
-						$('#node').empty()
-					},
-					success: function(data){
-						var time = (Date.now() - start)/1000;
-						x = data;
-						$('#node').append(
-							'<div class="alert alert-success"><h4>Prediction</h4><p>' + 
-							parseFloat(data).toFixed(3) + 
-							' (' + time.toFixed(3) +  
-							' seconds)</p></div>');
-					}
-				});
-				$.ajax({
-					url: '?' + $('form').serialize() + "&method=r",
-					beforeSend: function(){
-						$('#r').empty()
-					},
-					success: function(data){
-						var time = (Date.now() - start)/1000;
-						$('#r').append(
-							'<div class="alert alert-success"><h4>Prediction</h4><p>' + 
-							parseFloat(data).toFixed(3) + 
-							' (' + time.toFixed(3) +  
-							' seconds)</p></div>');
-					}
-				});
-				$.ajax({
-					url: '?' + $('form').serialize() + "&method=python",
-					beforeSend: function(){
-						$('#python').empty()
-					},
-					success: function(data){
-						var time = (Date.now() - start)/1000;
-						$('#python').append(
-							'<div class="alert alert-success"><h4>Prediction</h4><p>' + 
-							parseFloat(data).toFixed(3) + 
-							' (' + time.toFixed(3) +  
-							' seconds)</p></div>');
-					}
-				});
-			});
-		});
-		</script>
-	</body>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $('form').on('submit', function(e){
+        var start = Date.now();
+        e.preventDefault();
+        $.ajax({
+          url: '?' + $('form').serialize() + "&method=node",
+          beforeSend: function(){
+            $('#node').empty()
+          },
+          success: function(data){
+            var time = (Date.now() - start)/1000;
+            x = data;
+            $('#node').append(
+              '<div class="alert alert-success"><h4>Prediction</h4><p>' + 
+              parseFloat(data).toFixed(3) + 
+              ' (' + time.toFixed(3) +  
+              ' seconds)</p></div>');
+          }
+        });
+        $.ajax({
+          url: '?' + $('form').serialize() + "&method=r",
+          beforeSend: function(){
+            $('#r').empty()
+          },
+          success: function(data){
+            var time = (Date.now() - start)/1000;
+            $('#r').append(
+              '<div class="alert alert-success"><h4>Prediction</h4><p>' + 
+              parseFloat(data).toFixed(3) + 
+              ' (' + time.toFixed(3) +  
+              ' seconds)</p></div>');
+          }
+        });
+        $.ajax({
+          url: '?' + $('form').serialize() + "&method=python",
+          beforeSend: function(){
+            $('#python').empty()
+          },
+          success: function(data){
+            var time = (Date.now() - start)/1000;
+            $('#python').append(
+              '<div class="alert alert-success"><h4>Prediction</h4><p>' + 
+              parseFloat(data).toFixed(3) + 
+              ' (' + time.toFixed(3) +  
+              ' seconds)</p></div>');
+          }
+        });
+      });
+    });
+    </script>
+  </body>
 </html>
