@@ -13,7 +13,10 @@ class XgbJSON:
                  sparse_trained=True):
         """initialize"""
         self.booster = booster
-        self.fnames = booster.feature_names
+        if fnames not None:
+            self.fnames = fnames
+        else:
+            self.fnames = booster.feature_names
         self.na_value = na_value
         self.regression = regression
         self.categoricals = categoricals
