@@ -47,11 +47,13 @@ xgbjson <- function(
         f <- fnames[node$split + 1]
         
         if (!is.null(categoricals)) {
-          ix <- unlist(lapply(categoricals, grepl, f))
+          # sort so the first match belongs to the longest string
+          sorted_cats <- categoricals[order(-nchar(categoricals), categoricals)]
+          ix <- unlist(lapply(sorted_cats, grepl, f))
           
           if (any(ix)) {
-            val <- sprintf('"%s"', gsub(categoricals[ix][1], '', f))
-            f <- categoricals[ix][1]
+            val <- sprintf('"%s"', gsub(sorted_cats[ix][1], '', f))
+            f <- sorted_cats[ix][1]
             stmt <- '!=='
           }
         }
